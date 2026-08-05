@@ -1,0 +1,107 @@
+Experiment-2.1
+Search Insert Position(leetcode-35)
+
+Aim-Given a sorted array of distinct integers and a target value, return the index if the target is found. If not, return the index where it would be if it were inserted in order.
+You must write an algorithm with O(log n) runtime complexity.
+
+Algorithm-
+1)Start.
+2)Set left = 0 and right = n - 1.
+3)While left <= right:
+  >Compute mid = left + (right - left) / 2.
+  >If nums[mid] == target, return mid.
+  >Else if target > nums[mid], set left = mid + 1.
+  >Else, set right = mid - 1.
+4)Return left as the insertion index.
+5)Stop.
+
+Code-
+class Solution {
+public:
+    int searchInsert(vector<int>& nums, int target) {
+       int left=0;
+       int right=nums.size()-1;
+
+       while(left<=right){
+        int mid=left+(right-left)/2;
+        if(nums[mid]==target){
+            return mid;
+        }
+        else if(target>nums[mid]){
+            left=mid+1;
+        }
+        else{
+            right=mid-1;
+        }
+       } 
+       return left;
+    }
+};
+
+
+Experiment-2.2
+Implement Queue using Stacks(leetcode-232)
+
+Aim-Implement a first in first out (FIFO) queue using only two stacks. The implemented queue should support all the functions of a normal queue (push, peek, pop, and empty).
+
+Algorithm-
+Push(x)
+1)Start.
+2)Move all elements from s1 to s2.
+3)Push x into s1.
+4)Move all elements from s2 back to s1.
+5)Stop.
+Pop()
+1)Start.
+2)Store the top element of s1.
+3)Remove the top element from s1.
+4)Return the stored element.
+5)Stop.
+Peek()
+1)Start.
+2)Return the top element of s1.
+3)Stop.
+Empty()
+1)Start.
+2)If s1 is empty, return true.
+3)Otherwise, return false.
+4)Stop.
+
+Code-
+class MyQueue {
+public:
+        stack<int>s1;
+        stack<int>s2;
+    MyQueue() {
+        
+    }
+    
+    void push(int x) {
+        //s1->s2
+        while(!s1.empty()){
+            s2.push(s1.top());
+            s1.pop();
+        }
+        //x->s1
+        s1.push(x);
+        //s2->s1
+        while(!s2.empty()){
+            s1.push(s2.top());
+            s2.pop();
+        }
+    }
+    
+    int pop() {
+        int x=s1.top();
+        s1.pop();
+        return x;
+    }
+    
+    int peek() {
+        return s1.top();
+    }
+    
+    bool empty() {
+        return s1.empty();
+    }
+};
